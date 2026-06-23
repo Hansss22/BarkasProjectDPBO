@@ -94,7 +94,7 @@ public class ProductService implements IProductService{
     @Override
     public Product findProductById(int id) {
         for (Product item : productList) {
-            if (item.getId() == id) {
+            if (item.get() == id) {
                 return item;
             }
         }
