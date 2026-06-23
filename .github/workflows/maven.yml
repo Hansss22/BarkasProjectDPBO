@@ -1,0 +1,61 @@
+name: CI/CD Pipeline - Barkas Project DPBO
+
+# =====================================================================================
+# STRATEGI TRIGGER & BRANCHING
+#   - push/PR ke branch dev atau feature/** -> menjalankan build, test, inspect (CI/CT/CI)
+#   - push ke branch main (umumnya hasil merge dari dev/feature) -> menjalankan
+#     build, test, inspect, lalu deploy-staging dan deploy-production (CD)
+#   - workflow_dispatch -> memungkinkan trigger manual untuk keperluan demonstrasi video
+# =====================================================================================
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:
+
+env:
+  JAVA_VERSION: '21'
+
+# Izin minimum yang dibutuhkan: contents:write untuk membuat GitHub Release pada tahap
+# deploy, checks:write & pull-requests:write untuk publish laporan hasil test ke PR.
+permissions:
+  contents: write
+  checks: write
+  pull-requests: write
+
+jobs:
+
+  # ===================================================================================
+  # 1. CONTINUOUS INTEGRATION
+  #    Build/compile otomatis setiap push/PR, kelola dependensi via Maven, dan laporkan
+  #    status build (sukses/gagal) secara otomatis lewat status check job ini di GitHub.
+  # ===================================================================================
+  build:
+    name: build (Continuous Integration)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: maven
+
+      - name: Compile project & resolve dependencies (Maven)
+        run: mvn -B clean compile
+
+      - name: Upload hasil kompilasi
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-classes
+          path: target/classes
+          retention-days: 1
