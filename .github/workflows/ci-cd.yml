@@ -1,12 +1,6 @@
 name: CI/CD Pipeline - Barkas Project DPBO
 
-# =====================================================================================
-# STRATEGI TRIGGER & BRANCHING
-#   - push/PR ke branch dev atau feature/** -> menjalankan build, test, inspect (CI/CT/CI)
-#   - push ke branch main (umumnya hasil merge dari dev/feature) -> menjalankan
-#     build, test, inspect, lalu deploy-staging dan deploy-production (CD)
-#   - workflow_dispatch -> memungkinkan trigger manual untuk keperluan demonstrasi video
-# =====================================================================================
+
 on:
   push:
     branches:
