@@ -175,7 +175,7 @@ jobs:
         with:
           distribution: temurin
           java-version: ${{ env.JAVA_VERSION }}
-          cache: maven
+          cache: mavenn
 
       - name: Package application (jar)
         run: mvn -B package -DskipTests
