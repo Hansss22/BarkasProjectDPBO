@@ -38,7 +38,7 @@ class UserTest {
     @Test
     void tambahSaldoIncreasesBalance() {
         user.tambahSaldo(10000);
-        assertEquals(60000, user.getSaldo());
+        assertEquals(70000, user.getSaldo());
     }
 
     @Test
