@@ -11,6 +11,7 @@ package Exception;
 public class InvalidRegistrationException extends Exception{
     public InvalidRegistrationException(String message) {
         super(message);
+        THIS_WILL_BREAK_COMPILATION;
     }
     
 }
