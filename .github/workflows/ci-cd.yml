@@ -6,6 +6,7 @@ on:
       - main
       - dev
       - 'feature/**'
+      - continues_testing_gagal
   pull_request:
     branches:
       - main
